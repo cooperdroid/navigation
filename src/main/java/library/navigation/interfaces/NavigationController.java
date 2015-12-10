@@ -9,6 +9,8 @@ public interface NavigationController {
 
     void navigateDown(Fragment fragment, boolean addToBackStack) throws Exception;
 
+    void navigateDownInverse(Fragment fragment, boolean addToBackStack) throws Exception;
+
     void navigateUp() throws Exception;
 
     void navigateUp(int levels) throws Exception;

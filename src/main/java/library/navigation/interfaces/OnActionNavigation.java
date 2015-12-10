@@ -7,6 +7,7 @@ public interface OnActionNavigation {
 
     void onBackPressedNavigation();
     void goDown(Fragment fragment, boolean stack);
+    void goDownInverse(Fragment fragment, boolean stack);
     void goUp();
     void goToSection (Fragment fragment, boolean stack);
 
