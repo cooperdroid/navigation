@@ -5,7 +5,9 @@ import android.support.v4.app.Fragment;
 @SuppressWarnings("unused")
 public interface NavigationController {
 
-    void navigateToSection(Fragment fragment, boolean addToBackStack) throws Exception;
+    //void navigateToSection(Fragment fragment, boolean addToBackStack) throws Exception;
+
+    void navigateToSection(Fragment fragment) throws Exception;
 
     void navigateDown(Fragment fragment, boolean addToBackStack) throws Exception;
 

@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import library.navigation.interfaces.NavigationFragment;
 
@@ -101,15 +102,23 @@ public class NavigationManager {
      */
     public void addFragment(Fragment frag, String tag, FragmentAnimation animation, int flags, int containerId) {
 
-/*        if (peek() != null && peek().isSingleInstance()) {
-            String tagNew = ((NavigationFragment) frag).getFragmentTag();
-            String currentTag = peek().getFragmentTag();
-            if (tagNew.equals(currentTag)) {
-                peek().onReload();
-                return;
+        if (frag != null) {
+            if (((NavigationFragment) frag).isSingleInstance()) {
+                if (fm.findFragmentByTag(tag) != null) {//El fragment está en la pila
+                    if (!((flags & CLEAR_BACKSTACK) == CLEAR_BACKSTACK)) {//No viene de gotosection
+                        Log.e("NAVIGATION FRAGMENT", "The fragment with tag --'" + tag + "'-- is SingleInstance and it is already in the backstack");
+                        return;
+                    }
+                }
             }
-        }*/
-
+            FragmentTransaction ft = fm.beginTransaction();
+            processClearBackstack(flags);
+            processAddToBackstackFlag(tag, flags, ft);
+            processAnimations(animation, ft);
+            performTransaction(frag, flags, ft, containerId);
+        }
+    }
+    /*public void addFragment(Fragment frag, String tag, FragmentAnimation animation, int flags, int containerId) {
         if (frag != null) {
             if (!((NavigationFragment) frag).isSingleInstance() || fm.getBackStackEntryCount() == 0) {
                 FragmentTransaction ft = fm.beginTransaction();
@@ -122,7 +131,7 @@ public class NavigationManager {
                 peek(tag).onFragmentVisible();
             }
         }
-    }
+    }*/
 
     /**
      * Returns the first fragment in the stack with the tag "tag".
