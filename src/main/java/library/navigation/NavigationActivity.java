@@ -49,11 +49,18 @@ public class NavigationActivity extends FragmentActivity implements NavigationCo
         return this;
     }
 
-    @Override
+    /*@Override
     public void navigateToSection(Fragment fragment, boolean addToBackStack) throws Exception {
 
         int flags = (addToBackStack ? NavigationManager.ADD_TO_BACKSTACK : NavigationManager.DO_NOT_ADD_TO_BACKSTACK) &
                 NavigationManager.CLEAR_BACKSTACK;
+
+        setFragment(fragment, flags);
+    }*/
+
+    @Override
+    public void navigateToSection(Fragment fragment) throws Exception {
+        int flags = NavigationManager.CLEAR_BACKSTACK;
 
         setFragment(fragment, flags);
     }
