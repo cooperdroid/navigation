@@ -45,15 +45,22 @@ public class NavigationActivity extends FragmentActivity implements NavigationCo
     }
 
     public NavigationActivity setOnActionNavigation(OnActionNavigation listener) {
-        this. sOnActionNavigation = listener;
+        this.sOnActionNavigation = listener;
         return this;
     }
 
-    @Override
+    /*@Override
     public void navigateToSection(Fragment fragment, boolean addToBackStack) throws Exception {
 
         int flags = (addToBackStack ? NavigationManager.ADD_TO_BACKSTACK : NavigationManager.DO_NOT_ADD_TO_BACKSTACK) &
                 NavigationManager.CLEAR_BACKSTACK;
+
+        setFragment(fragment, flags);
+    }*/
+
+    @Override
+    public void navigateToSection(Fragment fragment) throws Exception {
+        int flags = NavigationManager.CLEAR_BACKSTACK;
 
         setFragment(fragment, flags);
     }
@@ -63,6 +70,30 @@ public class NavigationActivity extends FragmentActivity implements NavigationCo
         int flags = (addToBackStack ? NavigationManager.ADD_TO_BACKSTACK : NavigationManager.DO_NOT_ADD_TO_BACKSTACK);
 
         setFragment(fragment, flags);
+    }
+
+    @Override
+    public void navigateDownInverse(Fragment fragment, boolean addToBackStack) throws Exception {
+        int flags = (addToBackStack ? NavigationManager.ADD_TO_BACKSTACK : NavigationManager.DO_NOT_ADD_TO_BACKSTACK);
+
+        //Save previous animation
+        FragmentAnimation previousAnimation = this.sAnimation;
+
+        //Change animation
+        setGoBackAnimation();
+
+        setFragment(fragment, flags);
+
+        //Set new animation
+        this.config().setAnimation(previousAnimation);
+    }
+
+    private void setGoBackAnimation() {
+        this.config().setAnimation(new FragmentAnimation(
+                R.anim.continuous_slide_in_right,
+                R.anim.continuous_slide_out_right,
+                R.anim.continuous_slide_in_right,
+                R.anim.continuous_slide_out_right));
     }
 
     @Override
@@ -97,7 +128,7 @@ public class NavigationActivity extends FragmentActivity implements NavigationCo
         sNavigationManager.addFragment(fragment, ((NavigationFragment) fragment).getFragmentTag(), sAnimation, flags, sContainer);
     }
 
-    public boolean canActivityFinish(){
+    public boolean canActivityFinish() {
         return sNavigationManager.canActivityFinish();
     }
 
