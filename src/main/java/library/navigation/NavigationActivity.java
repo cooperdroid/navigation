@@ -60,9 +60,25 @@ public class NavigationActivity extends FragmentActivity implements NavigationCo
 
     @Override
     public void navigateToSection(Fragment fragment) throws Exception {
-        int flags = NavigationManager.CLEAR_BACKSTACK;
+        int flags = NavigationManager.ADD_TO_BACKSTACK & NavigationManager.CLEAR_BACKSTACK;
 
         setFragment(fragment, flags);
+    }
+
+    @Override
+    public void navigateToSectionInverse(Fragment fragment) throws Exception {
+        //Save previous animation
+        FragmentAnimation previousAnimation = this.sAnimation;
+
+        int flags = NavigationManager.ADD_TO_BACKSTACK & NavigationManager.CLEAR_BACKSTACK;
+
+        //Change animation
+        setGoBackAnimation();
+
+        setFragment(fragment, flags);
+
+        //Set new animation
+        this.config().setAnimation(previousAnimation);
     }
 
     @Override

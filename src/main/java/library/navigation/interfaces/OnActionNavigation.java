@@ -11,5 +11,6 @@ public interface OnActionNavigation {
     void goUp();
     //void goToSection (Fragment fragment, boolean stack);
     void goToSection (Fragment fragment);
+    void goToSectionInverse (Fragment fragment);
 
 }
