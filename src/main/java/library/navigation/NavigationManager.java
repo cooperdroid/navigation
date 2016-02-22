@@ -105,7 +105,7 @@ public class NavigationManager {
         if (frag != null) {
             if (((NavigationFragment) frag).isSingleInstance()) {
                 if (fm.findFragmentByTag(tag) != null) {//El fragment está en la pila
-                    if (!((flags & CLEAR_BACKSTACK) == CLEAR_BACKSTACK)) {//No viene de gotosection
+                    if (flags != (NavigationManager.ADD_TO_BACKSTACK & NavigationManager.CLEAR_BACKSTACK)) {//No viene de gotosection
                         Log.e("NAVIGATION FRAGMENT", "The fragment with tag --'" + tag + "'-- is SingleInstance and it is already in the backstack");
                         return;
                     }
